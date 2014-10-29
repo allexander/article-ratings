@@ -31,12 +31,14 @@ namespace ArticleRatings\Admin\Profiles
    // Load profiles menu controller
    require_once( AR_PLUGIN_DIR . '/admin/controllers/profiles-menu.c.php' );
    
-   // Load add profile controller
+   // Load proper profile controller
    if( filter_input(INPUT_GET, 'option') )
    {
+      // Load profile controller depending of what sub-page is selected
       require_once( AR_PLUGIN_DIR . '/admin/controllers/profiles-' . filter_input(INPUT_GET, 'option') . '.c.php' );      
    }
    else {
+      // Load default profile controller
       require_once( AR_PLUGIN_DIR . '/admin/controllers/profiles-list.c.php' );
    }
 	

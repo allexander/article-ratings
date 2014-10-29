@@ -2,7 +2,7 @@
 
    namespace ArticleRatings\Admin;
 
-   class ProfileMenu
+   class PollsMenu
    {
       
       public function __contruct()
@@ -11,7 +11,7 @@
       }
       
       public static function getURL($string){
-         return "?page=article-ratings&tab=profiles&option=" . $string;
+         return "?page=article-ratings&tab=polls&option=" . $string;
       }
       
       public static function isCurrent($option)
@@ -26,4 +26,4 @@
    
    //$profileMenu = new \ArticleRatings\Admin\ProfileMenu();
    
-   require_once( AR_PLUGIN_DIR . '/admin/views/profiles/profiles-menu.v.php' );
+   require_once( AR_PLUGIN_DIR . '/admin/views/polls/polls-menu.v.php' );
