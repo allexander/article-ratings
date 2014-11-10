@@ -15,6 +15,8 @@ namespace ArticleRatings;
 
 define('ARTICLERATINGS_VERSION', '0.0.1');
 define('AR_MIN_WP_VERSION', '3.1');
+// Plugin directory
+define('AR_PLUGIN_DIR', dirname(__FILE__)); 
 
 if( is_admin() )
 {

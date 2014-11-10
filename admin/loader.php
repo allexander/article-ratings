@@ -19,8 +19,6 @@ function Plugin_Page_URL() {
    return $pageURL;
 }
 
-// Plugin directory
-define('AR_PLUGIN_DIR', dirname(__FILE__)); 
 // Plugin files url
 define('AR_PLUGIN_FILES_URL', WP_PLUGIN_URL.'/'.basename(AR_PLUGIN_DIR));
 // Plugin current url 

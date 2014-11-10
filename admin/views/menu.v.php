@@ -1,7 +1,10 @@
+<?php
+    namespace ArticleRatings\Admin;
+?>
 <h2 class="nav-tab-wrapper">
-    <a href="<?= $MenuTabs->tabURL('home'); ?>" class="nav-tab <?= $MenuTabs->isCurrent('home'); ?>">Начало</a>
-    <a href="<?= $MenuTabs->tabURL('profiles'); ?>" class="nav-tab <?= $MenuTabs->isCurrent('profiles'); ?>">Профили</a>
-    <a href="<?= $MenuTabs->tabURL('polls'); ?>" class="nav-tab <?= $MenuTabs->isCurrent('polls'); ?>">Анкети</a>
-    <a href="<?= $MenuTabs->tabURL('poll-groups'); ?>" class="nav-tab <?= $MenuTabs->isCurrent('poll-groups'); ?>">Анкетни групи</a>
-    <a href="<?= $MenuTabs->tabURL('poll-collections'); ?>" class="nav-tab <?= $MenuTabs->isCurrent('poll-collections'); ?>">Колекции от анкети</a>
+    <a href="<?= tabURL('home'); ?>" class="nav-tab <?= isCurrent('home'); ?>">Начало</a>
+    <a href="<?= tabURL('profiles'); ?>" class="nav-tab <?= isCurrent('profiles'); ?>">Профили</a>
+    <a href="<?= tabURL('polls'); ?>" class="nav-tab <?= isCurrent('polls'); ?>">Анкети</a>
+    <a href="<?= tabURL('poll-groups'); ?>" class="nav-tab <?= isCurrent('poll-groups'); ?>">Анкетни групи</a>
+    <a href="<?= tabURL('poll-collections'); ?>" class="nav-tab <?= isCurrent('poll-collections'); ?>">Колекции от анкети</a>
 </h2>

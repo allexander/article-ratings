@@ -1,35 +1,50 @@
 <?php
 
-	namespace ArticleRatings\Admin;
+namespace ArticleRatings\Admin;
 
-   class MenuTabs
+/*class MenuTabs
+{
+   public function __contruct()
    {
-      public function __contruct()
+
+   }
+
+   public function adminURL()
+   {
+      return basename(filter_input(INPUT_SERVER, 'php_self')) . "?page=" . filter_input(INPUT_GET, 'page');
+   }
+
+   public function tabURL($name)
+   {
+      return $this->adminURL() . "&tab=" . $name;
+   }
+
+   public function isCurrent($tab)
+   {
+      if( filter_input(INPUT_GET, 'tab') == $tab || ( !filter_input(INPUT_GET, 'tab') && $tab == 'home' ) )
       {
 
-      }
-
-      public function adminURL()
-      {
-         return basename(filter_input(INPUT_SERVER, 'php_self')) . "?page=" . filter_input(INPUT_GET, 'page');
-      }
-
-      public function tabURL($name)
-      {
-         return $this->adminURL() . "&tab=" . $name;
-      }
-
-      public function isCurrent($tab)
-      {
-         if( filter_input(INPUT_GET, 'tab') == $tab || ( !filter_input(INPUT_GET, 'tab') && $tab == 'home' ) )
-         {
-
-            return "nav-tab-active";
-         }
+         return "nav-tab-active";
       }
    }
-    
-   $MenuTabs = new \ArticleRatings\Admin\MenuTabs();
-    
-   require_once( AR_PLUGIN_DIR . '/admin/views/menu.v.php');
-   
+}
+
+$MenuTabs = new \ArticleRatings\Admin\MenuTabs();
+*/
+
+
+function tabURL($name)
+{
+    $adminURL = basename(filter_input(INPUT_SERVER, 'php_self')) . "?page=" . filter_input(INPUT_GET, 'page');
+    return $adminURL . "&tab=" . $name;
+}
+
+function isCurrent($tab)
+{
+   if( filter_input(INPUT_GET, 'tab') == $tab || ( !filter_input(INPUT_GET, 'tab') && $tab == 'home' ) )
+   {
+      return "nav-tab-active";
+   }
+}
+
+require_once( AR_PLUGIN_DIR . '/admin/views/menu.v.php');
