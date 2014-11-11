@@ -28,4 +28,4 @@ define('AR_PLUGIN_ADMIN_OPTIONS_URL', explode("?", AR_PLUGIN_PAGE_URL)[0]);
 
 //echo $wpdb->prefix;
 
-require_once( 'controllers/admin.c.php' );
+require_once( 'controllers/loader.c.php' );

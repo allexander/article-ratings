@@ -1,4 +1,5 @@
 <?php
+
 namespace ArticleRatings\Database\Profiles
 {
 	class Tables

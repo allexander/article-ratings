@@ -67,6 +67,12 @@ class Admin
 }
 */
 
+// Load classes
+require_once( AR_PLUGIN_DIR . '/classes/Paths.php');
+require_once( AR_PLUGIN_DIR . '/classes/Database.php');
+require_once( AR_PLUGIN_DIR . '/classes/Users.php');
+require_once( AR_PLUGIN_DIR . '/classes/Polls.php');
+
 function includeAdminCssFiles()
 {
     wp_register_style('ar_style', AR_PLUGIN_FILES_URL . '/admin/assets/css/ar-style.css', false, '0.0.1');  
@@ -112,3 +118,4 @@ function adminMenu()
 add_action('admin_menu', 'ArticleRatings\Admin\adminMenu');
 add_action('admin_enqueue_scripts', 'ArticleRatings\Admin\includeAdminCssFiles');
 add_action('admin_enqueue_scripts', 'ArticleRatings\Admin\includeAdminJsFiles');
+

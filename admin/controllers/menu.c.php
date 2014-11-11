@@ -47,4 +47,4 @@ function isCurrent($tab)
    }
 }
 
-require_once( AR_PLUGIN_DIR . '/admin/views/menu.v.php');
+require_once( AR_PLUGIN_DIR . '/admin/views/components/menu.v.php');
