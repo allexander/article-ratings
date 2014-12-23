@@ -2,8 +2,8 @@
 
 	namespace ArticleRatings\Admin;
 
-   // Load additional header elements
-   require_once( AR_PLUGIN_DIR . '/admin/views/header.php');
+   // Load additional top elements
+   require_once( AR_PLUGIN_DIR . '/admin/views/top.php');
 
    // Load top menu
    require_once( AR_PLUGIN_DIR . '/admin/views/sections-menu.php' );

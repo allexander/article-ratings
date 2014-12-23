@@ -1,3 +1,17 @@
-#ar_adminNavigation { border:solid gray 1px; }
-.ar_profileTypeElementHide { display:none; }
-.wrap .add-new-h2-selected { background:#2ea2cc; color:#fff; }
+#ar_adminNavigation { border: solid gray 1px; }
+.ar_profileTypeElementHide { display: none; }
+.wrap .add-new-h2-selected { background: #2ea2cc; color: #fff; }
+
+/* Errors */
+form.poll-group-create .error .error-text { color: red; font-size: 0.9em; }
+form.poll-group-create .error .input { border: solid 1px red; }
+form.poll-group-create .error-field .error-text { color: red; font-size: 0.9em; }
+form.poll-group-create .error-field .input { border: solid 1px red; }
+
+form.poll-group-create input[readonly],
+form.poll-group-create textarea[readonly] {  }
+
+.poll-group-sections .section { margin-bottom: 15px; }
+.poll-group-sections .section input[type=text] { width: 350px; max-width: 90%; }
+.poll-group-sections .section .remove-section { margin-left: 10px; }
+.poll-group-sections { padding-bottom: 5px; }

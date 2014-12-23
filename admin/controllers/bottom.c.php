@@ -1,5 +1,5 @@
 <?php
-	namespace ArticleRatings\Admin;
+    namespace ArticleRatings\Admin;
 
 /* 
  * To change this license header, choose License Headers in Project Properties.

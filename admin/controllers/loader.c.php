@@ -47,7 +47,7 @@ class Admin
         }
         
         // Load head controller
-        require_once( AR_PLUGIN_DIR . '/admin/controllers/header.c.php');
+        require_once( AR_PLUGIN_DIR . '/admin/controllers/top.c.php');
         
         // Load controller
         if( gettype ( filter_input(INPUT_GET, 'tab') ) == 'NULL' )
@@ -93,7 +93,7 @@ function adminBody()
     }
 
     // Load head controller
-    require_once( AR_PLUGIN_DIR . '/admin/controllers/header.c.php');
+    require_once( AR_PLUGIN_DIR . '/admin/controllers/top.c.php');
 
     // Load controller
     if( gettype ( filter_input(INPUT_GET, 'tab') ) == 'NULL' )
@@ -113,6 +113,7 @@ function adminBody()
 function adminMenu()
 {
     add_options_page( 'Article ratings', 'Article ratings', 'manage_options', 'article-ratings', 'ArticleRatings\Admin\adminBody' );
+    //add_menu_page( 'Article ratings', 'Article ratings', 'manage_options', 'article-ratings' );
 }
 
 add_action('admin_menu', 'ArticleRatings\Admin\adminMenu');

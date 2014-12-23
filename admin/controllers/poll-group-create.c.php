@@ -1,15 +1,14 @@
 <?php
         
-    namespace ArticleRatings\Admin;
+namespace ArticleRatings\Admin;
 
-    // Load additional header elements
-    require_once( AR_PLUGIN_DIR . '/admin/views/header.php');
+//$formSubmitted = filter_input(INPUT_POST, 'save-new-poll-group') ? true : false;
+$viewPollGroupModuleURL = \ArticleRatings\URLs::moduleURL('poll-group-edit') . '&poll-group-id=1';
+$createPollGroupModuleURL = \ArticleRatings\URLs::moduleURL('poll-group-create');
 
-    // Load top menu
-    require_once( AR_PLUGIN_DIR . '/admin/views/sections-menu.php' );
+if( filter_input(INPUT_POST, 'save-new-poll-group') ) {
+    $createGroupResult = \ArticleRatings\PollGroups::createGroup($_POST);
+}
 
-    // Load view
-    require_once( AR_PLUGIN_DIR . '/admin/views/poll-groups.php');
-
-    // Load page bottom
-    require_once( AR_PLUGIN_DIR . '/admin/views/bottom.php');
+// Load views
+require_once( AR_PLUGIN_DIR . '/admin/views/polls/poll-group-create.v.php');
