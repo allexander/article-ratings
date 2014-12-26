@@ -14,23 +14,48 @@ class PollGroups {
         $return['listGroupsSections'] = false;
         
         $return['listGroups'] = $wpdb->get_results( 
-            "
-                SELECT * 
-                FROM " . $arPluginSettings['db']['pollGroups'] . "
-            "
+            "SELECT * FROM " . $arPluginSettings['db']['pollGroups']
         );
         
         $return['listGroupsSections'] = $wpdb->get_results( 
-            "
-                SELECT * 
-                FROM " . $arPluginSettings['db']['pollGroupsSections'] . "
-            "
+            "SELECT * FROM " . $arPluginSettings['db']['pollGroupsSections']
         );
         
         return $return;
         
     }
 
+    public static function showGroup($groupId) {
+        
+        global $wpdb;
+        global $arPluginSettings;
+        $return['errors'] = null;
+        
+        $return['group'] = $wpdb->get_results( 
+            "SELECT * FROM " . $arPluginSettings['db']['pollGroups'] . " WHERE id=" . $groupId
+        );
+        
+        $return['sections'] = $wpdb->get_results( 
+            "SELECT * FROM " . $arPluginSettings['db']['pollGroupsSections'] . " WHERE poll_group_id=" . $groupId
+        );
+        
+        return $return;
+    }
+    
+    public static function editGroup($groupId) {
+        
+        global $wpdb;
+        global $arPluginSettings;
+        $return['errors'] = null;
+        
+        /*
+         * Да изстрива разделите, които са били премахнати при редакцията. Да се добавят нови раздели също
+         */
+        
+        return $return;
+        
+    }
+    
     public static function deleteGroup($groupId) {
         
         global $wpdb;
