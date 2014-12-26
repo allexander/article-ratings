@@ -2,27 +2,74 @@
 
 namespace ArticleRatings;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of PollGroups
- *
- * @author Alexander
- */
 class PollGroups {
     
+    public static function listGroups( $from = 0, $to = 0) {
+        
+        global $wpdb;
+        global $arPluginSettings;
+        $return['errors'] = null;
+        $return['debug'] = false;
+        $return['listGroups'] = false;
+        $return['listGroupsSections'] = false;
+        
+        $return['listGroups'] = $wpdb->get_results( 
+            "
+                SELECT * 
+                FROM " . $arPluginSettings['db']['pollGroups'] . "
+            "
+        );
+        
+        $return['listGroupsSections'] = $wpdb->get_results( 
+            "
+                SELECT * 
+                FROM " . $arPluginSettings['db']['pollGroupsSections'] . "
+            "
+        );
+        
+        return $return;
+        
+    }
+
+    public static function deleteGroup($groupId) {
+        
+        global $wpdb;
+        global $arPluginSettings;
+        $return['errors'] = null;
+        $return['debug'] = null;
+        
+        $wpdb->delete( $arPluginSettings['db']['pollGroups'], array( 'id' => $groupId ) );
+        $wpdb->delete( $arPluginSettings['db']['pollGroupsSections'], array( 'poll_group_id' => $groupId ) );
+        
+        /*$wpdb->query( 
+            "DELETE FROM " . $arPluginSettings['db']['pollGroups'] . " WHERE id = " . $groupId
+        );
+        
+        $wpdb->query(
+            "DELETE FROM " . $arPluginSettings['db']['pollGroupsSections'] . " WHERE poll_group_id = " . $groupId
+        );
+        */
+        $return['debug'][0] = $arPluginSettings['db']['pollGroups'];
+        $return['debug'][1] = $arPluginSettings['db']['pollGroupsSections'];
+        
+        return $return;
+        
+    }
+        
     public static function createGroup($postData) {
         
         global $wpdb;
-        
+        global $arPluginSettings;
         $return['success'] = false;
         $return['errors'] = null;
         $return['savedFields'] = null;
         $return['debug'] = false;
+        $return['pollId'] = null;
+        
+        /* 
+         * Variables description
+         * 
+         */
         
         /*
          *  Checks if name field is empty
@@ -52,28 +99,51 @@ class PollGroups {
          */
         if( $return['errors'] == null ) {
             
-            // Insert in table 'wp1_ar_poll_groups'
-            $recordArray = array(
+            /*
+             * Checks if can write in database
+             * 
+             */
+            
+            /*
+             *  Insert in table $arPluginSettings['db']['pollGroups']
+             */
+            $wpdb->insert( $arPluginSettings['db']['pollGroups'], array(
                 'name' => $postData['name'],
                 'description' => $postData['description']
-            );
-            $wpdb->insert( 'wp1_ar_poll_groups', $recordArray );
+            ) );
+            
+            $return['pollId'] = $wpdb->insert_id;
+            
             if( !$wpdb->insert_id ) {
                 $return['errors']['insertInPollGroupsTable'] = true;
             }
-            //$return['debug'] = $wpdb->last_query;
             
-            // Insert in table 'wp1_ar_poll_groups_sections'
             /*
-            $recordArray = array(
-                'poll_group_id' => '',
-                'relative_id' => '',
-                'name' => ''
-            );
-            $wpdb->insert( 'wp1_ar_poll_groups_sections', $recordArray );
-            if( !$wpdb->insert_id ) {
-                $return['errors']['insertInPollGroupsSectionsTable'] = true;
-            } */
+             *  Insert in table $arPluginSettings['db']['pollGroupsSections']
+             */
+            $lastSectionId = null;
+            
+            for($i = 0; $i < count($postData['section']); $i++ ){                
+            
+                $wpdb->insert( $arPluginSettings['db']['pollGroupsSections'], array(
+                    'poll_group_id' => $return['pollId'],
+                    'relative_id' => $i,
+                    'name' => $postData['section'][$i]
+                ) );
+                
+                if( !$wpdb->insert_id ) {
+                    if( $lastSectionId ) {
+                        $wpdb->delete( $arPluginSettings['db']['pollGroups'], array( 'id' => $return['pollId'] ) );
+                    }
+                    $return['errors']['insertInPollGroupsSectionsTable'][$i] = true;
+                }
+                else {
+                    $lastSectionId = $wpdb->insert_id;
+                }
+                
+            }
+            
+            //$return['debug'] = $postData['section'];
             
         }
         
@@ -84,12 +154,11 @@ class PollGroups {
             $return['success'] = true;
         }
         
-        /*
-         *  Returns debuggin information
-         */
-        //$return['debug'] = null; //$wpdb->get_results( "SELECT id, name FROM wp1_ar_poll_groups" );
-        
         return $return;
     }
     
 }
+
+/* ToDo:
+ * При презареждане на страницата да не се обработва отново формата
+ */

@@ -18,6 +18,15 @@ define('AR_MIN_WP_VERSION', '3.1');
 // Plugin directory
 define('AR_PLUGIN_DIR', dirname(__FILE__)); 
 
+// Loading settings file
+require_once( AR_PLUGIN_DIR . '/settings.php');
+
+// Loading functions
+require_once( AR_PLUGIN_DIR . '/functions/functions.php');
+
+// Registering variables
+//$d = '\ArticleRatings\d()';
+
 if( is_admin() )
 {
     require_once( AR_PLUGIN_DIR . '/admin/loader.php' );

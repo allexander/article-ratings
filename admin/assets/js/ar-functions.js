@@ -82,4 +82,38 @@
     
     $('.poll-group-sections').removePollGroupSection();
     
+    
+    /*
+     * Delete poll group
+     */
+    $.fn.detelePollGroupPopup = function() {
+        
+        return this.each(function(){
+            
+            var $deleteBtn,
+            confirmResult;
+           
+            $(this).on('click', function(){
+               
+                $deleteBtn = $(this);               
+                confirmResult = confirm( $deleteBtn.attr('data-delete-text') );
+                
+                if ( confirmResult === true ) {
+                    $.ajax({
+                        url: $deleteBtn.attr('href'),
+                        cache: false
+                    }).done(function() {
+                        location.reload();
+                    });
+                }
+                return false;
+                
+            });
+            
+        });
+        
+    };
+    
+    $('.delete-poll-group-btn').detelePollGroupPopup();
+    
 }( jQuery ));

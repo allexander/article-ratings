@@ -21,12 +21,10 @@ function Plugin_Page_URL() {
 
 // Plugin files url
 define('AR_PLUGIN_FILES_URL', WP_PLUGIN_URL.'/'.basename(AR_PLUGIN_DIR));
+
 // Plugin current url 
 define('AR_PLUGIN_PAGE_URL', Plugin_Page_URL());
 define('AR_PLUGIN_ADMIN_OPTIONS_URL', explode("?", AR_PLUGIN_PAGE_URL)[0]);
-//$wpdb = new wpdb;
-
-//echo $wpdb->prefix;
 
 // Load classes
 require_once( AR_PLUGIN_DIR . '/classes/Paths.php');
@@ -35,9 +33,6 @@ require_once( AR_PLUGIN_DIR . '/classes/Database.php');
 require_once( AR_PLUGIN_DIR . '/classes/Users.php');
 require_once( AR_PLUGIN_DIR . '/classes/Polls.php');
 require_once( AR_PLUGIN_DIR . '/admin/models/PollGroups.php');
-
-
-
 
 function includeAdminAssetsScripts()
 {

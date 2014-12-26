@@ -1,14 +1,7 @@
 <h2>Създаване на анкетна група <a href="<?= \ArticleRatings\URLs::moduleURL('poll-groups'); ?>" class="add-new-h2">Списък анкетни групи</a> <a href="<?= \ArticleRatings\URLs::moduleURL('poll-group-create'); ?>" class="add-new-h2">Създай нова анкетна група</a></h2>
 
 <?php 
-    $ifSuccess = isset($createGroupResult) && $createGroupResult['success'];
     $readOnlyInput = '';
-    
-    if( isset($createGroupResult) ){
-        echo '<pre>';
-        print_r( $createGroupResult );
-        echo '</pre><br />';
-    }
     
     if( $ifSuccess ) {
         $readOnlyInput = 'readonly="readonly"';
@@ -18,7 +11,7 @@
 ?>
 <div class="updated below-h2">
     <p>
-        Анкетната група бе създадена успешно! <a href="<?= \ArticleRatings\URLs::moduleURL('poll-groups'); ?>">Редактирай анкетната група</a>
+        Анкетната група бе създадена успешно! <a href="<?= \ArticleRatings\URLs::moduleURL('poll-group-edit'); ?>&poll-id=<?= $createGroupResult['pollId']; ?>">Редактирай анкетната група</a>
     </p>
 </div>
 <?php
@@ -26,8 +19,8 @@
 ?>
 <form method="post" name="new-poll-group" class="poll-group-create">
     <table class="form-table">
-        <tr class="<?php if( isset($createGroupResult) && $createGroupResult['errors']['emptyName'] ) { echo "error"; } ?>" >
-            <th>Име*</th>
+        <tr class="<?php if( isset($createGroupResult) && isset($createGroupResult['errors']['emptyName']) ) { echo "error"; } ?>" >
+            <th>Име<?php if(!$ifSuccess) { echo "*"; } ?></th>
             <td>
                 <?php 
                     $nameField = '';
@@ -36,7 +29,7 @@
                     }
                 ?>
                 <input type="text" name="name" value="<?= $nameField; ?>" class="large-text input" <?= $readOnlyInput; ?> />
-                <?php if( isset($createGroupResult) && $createGroupResult['errors']['emptyName'] ) { ?>
+                <?php if( isset($createGroupResult) && isset($createGroupResult['errors']['emptyName']) ) { ?>
                     <div class="error-text">Моля, въведете име на анкетната група.</div>
                 <?php } ?>
             </td>
@@ -54,7 +47,7 @@
             </td>
         </tr>
         <tr>
-            <th>Раздели*</th>
+            <th>Раздели<?php if(!$ifSuccess) { echo "*"; } ?></th>
             <td>
                 <div class="poll-group-sections">
                     <?php 
@@ -66,7 +59,7 @@
                     ?>
                     <?php
                         $errorClass = '';
-                        if( isset( $createGroupResult['errors']['emptySection'][$counter] ) ) {
+                        if( isset($createGroupResult['errors']['emptySection'][$counter]) ) {
                             $errorClass = 'error-field';
                         }
                     ?>
@@ -81,7 +74,7 @@
                                 }
                             ?>
                             <?php
-                                if( isset( $createGroupResult['errors']['emptySection'][$counter] ) ) {
+                                if( isset($createGroupResult['errors']['emptySection'][$counter]) ) {
                             ?>
                                 <div class="error-text">Моля, въведете име на раздела.</div>
                             <?php
@@ -118,6 +111,13 @@
         <tr>
             <th>&nbsp;</th>
             <td>
+                <?php 
+                    if($ifSuccess) { 
+                ?>
+                <input type="hidden" name="created" value="1" />
+                <?php
+                    } 
+                ?>
                 <?php 
                     if( !isset($createGroupResult) ) {
                 ?>

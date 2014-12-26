@@ -15,3 +15,11 @@ form.poll-group-create textarea[readonly] {  }
 .poll-group-sections .section input[type=text] { width: 350px; max-width: 90%; }
 .poll-group-sections .section .remove-section { margin-left: 10px; }
 .poll-group-sections { padding-bottom: 5px; }
+
+/* Debug box */
+.article-ratings-plugin .debug-box { margin:15px 0; border-left: #009966 solid 3px; }
+.article-ratings-plugin .debug-box-inner { padding:10px; background: #fffff4; border: solid 1px #bbb; border-left: none; }
+
+/* Polls groups list */
+.article-ratings-plugin .poll-groups-table .c1 { width: 40px; }
+.article-ratings-plugin .poll-groups-table .c4 { width: 85px; text-align: right; }

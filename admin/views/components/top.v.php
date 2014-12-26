@@ -2,7 +2,7 @@
     namespace ArticleRatings\Admin;
 ?>
 
-<div class="wrap">
+<div class="wrap article-ratings-plugin">
 
     <h2 class="nav-tab-wrapper">
         <a href="<?= tabURL('home'); ?>" class="nav-tab <?= isCurrentTab('home'); ?>">Начало</a>
