@@ -1,6 +1,8 @@
 <h2>Създаване на анкетна група <a href="<?= \ArticleRatings\URLs::moduleURL('poll-groups'); ?>" class="add-new-h2">Списък анкетни групи</a> <a href="<?= \ArticleRatings\URLs::moduleURL('poll-group-create'); ?>" class="add-new-h2">Създай нова анкетна група</a></h2>
 
 <?php 
+
+    $ifSuccess = isset($createGroupResult) && $createGroupResult['success'];
     $readOnlyInput = '';
     
     if( $ifSuccess ) {
