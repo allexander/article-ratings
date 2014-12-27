@@ -10,7 +10,7 @@
         <!--<a href="<?= tabURL('polls'); ?>" class="nav-tab <?= isCurrentTab('polls'); ?>">Анкети</a>-->
         <?php
             $isCurrent = '';
-            if( $_GET['module'] == 'poll-groups' || $_GET['module'] == 'poll-groups-edit' || $_GET['module'] == 'poll-group-create' ) {
+            if( $_GET['module'] == 'poll-groups' || $_GET['module'] == 'poll-group-edit' || $_GET['module'] == 'poll-group-create' ) {
                 $isCurrent = 'nav-tab-active';
             }
         ?>

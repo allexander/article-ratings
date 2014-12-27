@@ -2,7 +2,6 @@
 
 
 <?php
-    $listGroups = \ArticleRatings\PollGroups::listGroups();
     
     //$d($var);
     //global $arPluginSettings;
