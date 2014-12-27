@@ -8,6 +8,7 @@ $createPollGroupModuleURL = \ArticleRatings\URLs::moduleURL('poll-group-create')
 
 if( filter_input(INPUT_POST, 'save-new-poll-group') ) {
     $createGroupResult = \ArticleRatings\PollGroups::createGroup($_POST);
+    d($createGroupResult);
 }
 
 // Load views

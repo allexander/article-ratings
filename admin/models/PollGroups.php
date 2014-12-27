@@ -42,15 +42,56 @@ class PollGroups {
         return $return;
     }
     
-    public static function editGroup($groupId) {
+    public static function editGroup($postData) {
         
         global $wpdb;
         global $arPluginSettings;
         $return['errors'] = null;
+        $return['success'] = false;
+        $return['debug'] = null;
         
         /*
-         * Да изстрива разделите, които са били премахнати при редакцията. Да се добавят нови раздели също
+         * Да изтрива разделите, които са били премахнати при редакцията. Да се добавят нови раздели също
          */
+        
+        /*
+         * Update groups table
+         */
+        $wpdb->update(
+            $arPluginSettings['db']['pollGroups'], 
+            array( "name" => $postData['name'], "description" => $postData['description'] ), 
+            array( "id" => $postData['group-id'] ), 
+            array("%s", "%s"),
+            array("%d")
+        );
+        
+        /*
+         * Update groups sections table
+         */
+
+        $wpdb->delete( $arPluginSettings['db']['pollGroupsSections'], array( 'poll_group_id' => $postData['group-id'] ) );
+        
+        $lastSectionId = null;
+
+        for($i = 0; $i < count($postData['section']); $i++ ){                
+
+            $wpdb->insert( $arPluginSettings['db']['pollGroupsSections'], array(
+                'poll_group_id' => $postData['group-id'],
+                'relative_id' => $i,
+                'name' => $postData['section'][$i]
+            ) );
+
+            if( !$wpdb->insert_id ) {
+                if( $lastSectionId ) {
+                    $wpdb->delete( $arPluginSettings['db']['pollGroups'], array( 'id' => $postData['group-id'] ) );
+                }
+                $return['errors']['insertInPollGroupsSectionsTable'][$i] = true;
+            }
+            else {
+                $lastSectionId = $wpdb->insert_id;
+            }
+
+        }
         
         return $return;
         
@@ -65,17 +106,9 @@ class PollGroups {
         
         $wpdb->delete( $arPluginSettings['db']['pollGroups'], array( 'id' => $groupId ) );
         $wpdb->delete( $arPluginSettings['db']['pollGroupsSections'], array( 'poll_group_id' => $groupId ) );
-        
-        /*$wpdb->query( 
-            "DELETE FROM " . $arPluginSettings['db']['pollGroups'] . " WHERE id = " . $groupId
-        );
-        
-        $wpdb->query(
-            "DELETE FROM " . $arPluginSettings['db']['pollGroupsSections'] . " WHERE poll_group_id = " . $groupId
-        );
-        */
-        $return['debug'][0] = $arPluginSettings['db']['pollGroups'];
-        $return['debug'][1] = $arPluginSettings['db']['pollGroupsSections'];
+
+        //$return['debug'][0] = $arPluginSettings['db']['pollGroups'];
+        //$return['debug'][1] = $arPluginSettings['db']['pollGroupsSections'];
         
         return $return;
         
@@ -89,7 +122,7 @@ class PollGroups {
         $return['errors'] = null;
         $return['savedFields'] = null;
         $return['debug'] = false;
-        $return['pollId'] = null;
+        $return['pollGroupId'] = null;
         
         /* 
          * Variables description
@@ -137,7 +170,7 @@ class PollGroups {
                 'description' => $postData['description']
             ) );
             
-            $return['pollId'] = $wpdb->insert_id;
+            $return['pollGroupId'] = $wpdb->insert_id;
             
             if( !$wpdb->insert_id ) {
                 $return['errors']['insertInPollGroupsTable'] = true;
@@ -151,15 +184,24 @@ class PollGroups {
             for($i = 0; $i < count($postData['section']); $i++ ){                
             
                 $wpdb->insert( $arPluginSettings['db']['pollGroupsSections'], array(
-                    'poll_group_id' => $return['pollId'],
+                    'poll_group_id' => $return['pollGroupId'],
                     'relative_id' => $i,
                     'name' => $postData['section'][$i]
                 ) );
                 
-                if( !$wpdb->insert_id ) {
+                /*
+                 * Checks if data is saved correctly in database
+                 */
+                
+                $pollGroupSectionCreated = $wpdb->get_results( 
+                    "SELECT * FROM " . $arPluginSettings['db']['pollGroupsSections'] . " WHERE poll_group_id=" . $return['pollGroupId']
+                );
+                if( !$pollGroupSectionCreated ) {
                     if( $lastSectionId ) {
-                        $wpdb->delete( $arPluginSettings['db']['pollGroups'], array( 'id' => $return['pollId'] ) );
+                        $wpdb->delete( $arPluginSettings['db']['pollGroups'], array( 'id' => $groupId ) );
+                        $wpdb->delete( $arPluginSettings['db']['pollGroupsSections'], array( 'poll_group_id' => $groupId ) );                    
                     }
+
                     $return['errors']['insertInPollGroupsSectionsTable'][$i] = true;
                 }
                 else {
@@ -167,8 +209,6 @@ class PollGroups {
                 }
                 
             }
-            
-            //$return['debug'] = $postData['section'];
             
         }
         
